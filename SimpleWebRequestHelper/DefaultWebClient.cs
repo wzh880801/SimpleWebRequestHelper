@@ -53,33 +53,48 @@ namespace SimpleWebRequestHelper
             }
         }
 
+        private Encoding _defaultEncoding = Encoding.UTF8;
+        public Encoding ParseEncoding
+        {
+            get
+            {
+                return _defaultEncoding;
+            }
+            set
+            {
+                _defaultEncoding = value;
+            }
+        }
+
         public virtual void SetDomain(string domain)
         {
             this._host = domain;
         }
 
-        public DefaultWebClient() : 
+        public DefaultWebClient() :
             base()
         {
 
         }
 
-        public DefaultWebClient(string domain) : 
+        public DefaultWebClient(string domain) :
             this()
         {
             this._host = domain;
         }
 
-        private T Parse<T>(Entity.SimpleWebRequest<T> request, byte[] bytes)
+        private T Parse<T>(Entity.SimpleWebRequest<T> request, HttpResponse httpResponse)
             where T : Entity.SimpleWebResponse
         {
-            var responseString = Encoding.UTF8.GetString(bytes);
+            var responseString = ParseEncoding.GetString(httpResponse.ResponseBytes);
 
             if (string.IsNullOrWhiteSpace(responseString))
                 return default(T);
 
             var t = System.Activator.CreateInstance<T>();
-            t.ResponseBase64String = Convert.ToBase64String(bytes);
+            t.ResponseBase64String = Convert.ToBase64String(httpResponse.ResponseBytes);
+            t.Headers = httpResponse.Headers;
+            t.StatusCode = httpResponse.StatusCode;
 
             if (t.ResponseType == Enum.ResponseType.Stream)
             {
@@ -89,19 +104,23 @@ namespace SimpleWebRequestHelper
             {
                 var _t = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseString);
                 _t.ResponseBase64String = t.ResponseBase64String;
+                _t.Headers = httpResponse.Headers;
+                _t.StatusCode = httpResponse.StatusCode;
                 return _t;
             }
             else if (t.ResponseType == Enum.ResponseType.XML)
             {
                 using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
                 {
-                    ms.Write(bytes, 0, bytes.Length);
+                    ms.Write(httpResponse.ResponseBytes, 0, httpResponse.ResponseBytes.Length);
                     ms.Position = 0;
                     var serializor = new System.Xml.Serialization.XmlSerializer(typeof(T));
                     var obj = serializor.Deserialize(ms) as T;
                     if (obj != null)
                     {
-                        obj.ResponseBase64String = Convert.ToBase64String(bytes);
+                        obj.ResponseBase64String = Convert.ToBase64String(httpResponse.ResponseBytes);
+                        obj.Headers = httpResponse.Headers;
+                        obj.StatusCode = httpResponse.StatusCode;
                     }
                     return obj;
                 }
@@ -149,25 +168,41 @@ namespace SimpleWebRequestHelper
         {
             SetHost(request);
 
-            var bytes = Helper.WebHelper.GetRequestBytes(request, ref _cookie);
-            return this.Parse(request, bytes);
+            var response = Helper.WebHelper.GetResponse(request, _cookie);
+            return this.Parse(request, response);
         }
 
-        public virtual string ExecuteAsString<T>(Entity.SimpleWebRequest<T> request)
+        /// <summary>
+        /// Use this to download a big file from server
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="request"></param>
+        /// <param name="fileSaveFullPath"></param>
+        /// <returns></returns>
+        public virtual T ExecuteDownload<T>(Entity.SimpleWebRequest<T> request, string fileSaveFullPath)
             where T : Entity.SimpleWebResponse
         {
             SetHost(request);
 
-            return Helper.WebHelper.GetRequestString(request, ref _cookie);
+            var response = Helper.WebHelper.DownloadFile(request, _cookie, fileSaveFullPath);
+            return this.Parse(request, response);
         }
 
-        public virtual async Task<string> ExecuteAsStringAsync<T>(Entity.SimpleWebRequest<T> request)
-            where T : Entity.SimpleWebResponse
-        {
-            SetHost(request);
+        //public virtual string ExecuteAsString<T>(Entity.SimpleWebRequest<T> request)
+        //    where T : Entity.SimpleWebResponse
+        //{
+        //    SetHost(request);
 
-            return await Helper.WebHelper.GetRequestStringAsync(request, _cookie);
-        }
+        //    return Helper.WebHelper.GetResponse(request, _cookie).ResposeString;
+        //}
+
+        //public virtual async Task<string> ExecuteAsStringAsync<T>(Entity.SimpleWebRequest<T> request)
+        //    where T : Entity.SimpleWebResponse
+        //{
+        //    SetHost(request);
+
+        //    return (await Helper.WebHelper.GetResponseAsync(request, _cookie)).ResposeString;
+        //}
 
         /// <summary>
         /// Async submit the specified request
@@ -180,8 +215,24 @@ namespace SimpleWebRequestHelper
         {
             SetHost(request);
 
-            var bytes = await Helper.WebHelper.GetRequestBytesAsync(request, _cookie);
-            return this.Parse(request, bytes);
+            var response = await Helper.WebHelper.GetResponseAsync(request, _cookie);
+            return this.Parse(request, response);
+        }
+
+        /// <summary>
+        /// Use this to download a big file from server
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="request"></param>
+        /// <param name="fileSaveFullPath"></param>
+        /// <returns></returns>
+        public virtual async Task<T> ExecuteDownloadAsync<T>(Entity.SimpleWebRequest<T> request, string fileSaveFullPath)
+            where T : Entity.SimpleWebResponse
+        {
+            SetHost(request);
+
+            var response = await Helper.WebHelper.DownloadFileAsync(request, _cookie, fileSaveFullPath);
+            return this.Parse(request, response);
         }
 
         /// <summary>

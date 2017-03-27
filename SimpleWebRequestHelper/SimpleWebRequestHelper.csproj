@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attribute\EnumDescriptionAttribute.cs" />
     <Compile Include="DefaultWebClient.cs" />
     <Compile Include="Common\ExDateTime.cs" />
     <Compile Include="Common\Extensions.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Entity\SimpleWebResponse.cs" />
     <Compile Include="Enum\HttpMethods.cs" />
     <Compile Include="Helper\CryptHelper.cs" />
+    <Compile Include="Helper\EnumHelper.cs" />
     <Compile Include="Helper\FileHelper.cs" />
     <Compile Include="Helper\ImageHelper.cs" />
     <Compile Include="Helper\WebQueryHelper.cs" />

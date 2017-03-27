@@ -5,6 +5,8 @@ namespace SimpleWebRequestHelper.Enum
     public enum HttpMethods
     {
         GET,
-        POST
+        POST,
+        PUT,
+        DELETE
     }
 }
