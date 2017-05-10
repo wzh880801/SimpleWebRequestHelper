@@ -89,7 +89,12 @@ namespace SimpleWebRequestHelper
             var responseString = ParseEncoding.GetString(httpResponse.ResponseBytes);
 
             if (string.IsNullOrWhiteSpace(responseString))
-                return default(T);
+            {
+                var obj = System.Activator.CreateInstance<T>();
+                obj.Headers = httpResponse.Headers;
+                obj.StatusCode = httpResponse.StatusCode;
+                return obj;
+            }
 
             var t = System.Activator.CreateInstance<T>();
             t.ResponseBase64String = Convert.ToBase64String(httpResponse.ResponseBytes);
@@ -136,7 +141,7 @@ namespace SimpleWebRequestHelper
                         var reg = at as Common.RegexAttribute;
                         var regex = new Regex(reg.RegexPattern, reg.RegexOptions);
                         var match = regex.Match(responseString);
-                        if (match != null && p.CanWrite)
+                        if (match != null && p.CanWrite && match.Success)
                         {
                             var propType = Nullable.GetUnderlyingType(p.PropertyType) ?? p.PropertyType;
                             var _value = match.Groups[reg.Key].Value;

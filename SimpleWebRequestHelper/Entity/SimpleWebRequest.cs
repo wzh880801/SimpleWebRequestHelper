@@ -174,7 +174,7 @@ namespace SimpleWebRequestHelper.Entity
             }
         }
 
-        private void SetHeader(string key, string value)
+        public void SetHeader(string key, string value)
         {
             if (!_headers.ContainsKey(key))
                 _headers.Add(key, value);
@@ -182,7 +182,7 @@ namespace SimpleWebRequestHelper.Entity
                 _headers[key] = value;
         }
 
-        private void RemoveHeader(string key)
+        public void RemoveHeader(string key)
         {
             if (_headers.ContainsKey(key))
                 _headers.Remove(key);

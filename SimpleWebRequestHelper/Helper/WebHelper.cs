@@ -26,8 +26,10 @@ namespace SimpleWebRequestHelper.Helper
             }
 
             var request = WebRequest.Create(api) as HttpWebRequest;
-            request.Accept = _request.Accept;
-            request.UserAgent = _request.UserAgent;
+            if (!string.IsNullOrWhiteSpace(_request.Accept))
+                request.Accept = _request.Accept;
+            if (!string.IsNullOrWhiteSpace(_request.UserAgent))
+                request.UserAgent = _request.UserAgent;
             request.CookieContainer = cookie;
             request.AllowAutoRedirect = _request.AllowAutoRedirect;
 
@@ -280,6 +282,10 @@ namespace SimpleWebRequestHelper.Helper
                         DeflateStream st = new DeflateStream(s, CompressionMode.Decompress);
                         httpResponse.ResponseBytes = ReadStreamBytes(st);
                     }
+                    else
+                    {
+                        httpResponse.ResponseBytes = ReadStreamBytes(s);
+                    }
                 }
                 else
                 {
@@ -436,6 +442,10 @@ namespace SimpleWebRequestHelper.Helper
                         {
                             DeflateStream st = new DeflateStream(s, CompressionMode.Decompress);
                             return ReadStreamBytes(st);
+                        }
+                        else
+                        {
+                            return ReadStreamBytes(s);
                         }
                     }
                     else
