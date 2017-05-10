@@ -26,6 +26,12 @@ namespace SimpleWebRequestHelper.Helper
             }
 
             var request = WebRequest.Create(api) as HttpWebRequest;
+            if (_request.Headers != null)
+            {
+                foreach (var k in _request.Headers)
+                    request.Headers.Add(k.Key, k.Value);
+            }
+
             if (!string.IsNullOrWhiteSpace(_request.Accept))
                 request.Accept = _request.Accept;
             if (!string.IsNullOrWhiteSpace(_request.UserAgent))
@@ -50,12 +56,6 @@ namespace SimpleWebRequestHelper.Helper
 
             if (!string.IsNullOrWhiteSpace(_request.Referer))
                 request.Referer = _request.Referer;
-
-            if (_request.Headers != null)
-            {
-                foreach (var key in _request.Headers.Keys)
-                    request.Headers.Add(key, _request.Headers[key]);
-            }
 
             return request;
         }
