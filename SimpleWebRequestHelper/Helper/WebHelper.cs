@@ -237,28 +237,27 @@ namespace SimpleWebRequestHelper.Helper
         internal static HttpResponse GetResponse<T>(Entity.SimpleWebRequest<T> _request, CookieContainer cookie)
             where T : Entity.SimpleWebResponse
         {
-            var request = CreateRequest(_request, ref cookie);
-
-            if (_request.HttpMethod == Enum.HttpMethods.POST)
-            {
-                if (_request.QueryBytes == null || _request.QueryBytes.Length == 0)
-                {
-                    if (!string.IsNullOrWhiteSpace(_request.QueryString))
-                        WriteRequestParas(request, _request.QueryString);
-                    else
-                        request.ContentLength = 0;
-                }
-                else
-                {
-                    WriteRequestParas(request, _request.QueryBytes);
-                }
-            }
-
             HttpResponse httpResponse = null;
             HttpWebResponse response = null;
 
+            var request = CreateRequest(_request, ref cookie);
             try
             {
+                if (_request.HttpMethod == Enum.HttpMethods.POST)
+                {
+                    if (_request.QueryBytes == null || _request.QueryBytes.Length == 0)
+                    {
+                        if (!string.IsNullOrWhiteSpace(_request.QueryString))
+                            WriteRequestParas(request, _request.QueryString);
+                        else
+                            request.ContentLength = 0;
+                    }
+                    else
+                    {
+                        WriteRequestParas(request, _request.QueryBytes);
+                    }
+                }
+
                 response = request.GetResponse() as HttpWebResponse;
             }
             catch (WebException ex)
@@ -301,28 +300,28 @@ namespace SimpleWebRequestHelper.Helper
         internal static HttpResponse DownloadFile<T>(Entity.SimpleWebRequest<T> _request, CookieContainer cookie, string fileSaveFullPath)
             where T : Entity.SimpleWebResponse
         {
-            var request = CreateRequest(_request, ref cookie);
-
-            if (_request.HttpMethod == Enum.HttpMethods.POST)
-            {
-                if (_request.QueryBytes == null || _request.QueryBytes.Length == 0)
-                {
-                    if (!string.IsNullOrWhiteSpace(_request.QueryString))
-                        WriteRequestParas(request, _request.QueryString);
-                    else
-                        request.ContentLength = 0;
-                }
-                else
-                {
-                    WriteRequestParas(request, _request.QueryBytes);
-                }
-            }
-
             HttpResponse httpResponse = null;
             HttpWebResponse response = null;
 
+            var request = CreateRequest(_request, ref cookie);
+
             try
             {
+                if (_request.HttpMethod == Enum.HttpMethods.POST)
+                {
+                    if (_request.QueryBytes == null || _request.QueryBytes.Length == 0)
+                    {
+                        if (!string.IsNullOrWhiteSpace(_request.QueryString))
+                            WriteRequestParas(request, _request.QueryString);
+                        else
+                            request.ContentLength = 0;
+                    }
+                    else
+                    {
+                        WriteRequestParas(request, _request.QueryBytes);
+                    }
+                }
+
                 response = request.GetResponse() as HttpWebResponse;
             }
             catch (WebException ex)
@@ -331,7 +330,7 @@ namespace SimpleWebRequestHelper.Helper
             }
 
             httpResponse = new HttpResponse(response);
-            
+
             // Open the report file.
             FileInfo zipFileInfo = new FileInfo(fileSaveFullPath);
             if (!zipFileInfo.Directory.Exists)
@@ -523,31 +522,30 @@ namespace SimpleWebRequestHelper.Helper
         internal static async Task<HttpResponse> GetResponseAsync<T>(Entity.SimpleWebRequest<T> _request, CookieContainer cookie)
             where T : Entity.SimpleWebResponse
         {
-            var request = CreateRequest(_request, ref cookie);
-
-            if (_request.HttpMethod == Enum.HttpMethods.POST)
-            {
-                if (_request.QueryBytes == null || _request.QueryBytes.Length == 0)
-                {
-                    if (!string.IsNullOrWhiteSpace(_request.QueryString))
-                        WriteRequestParas(request, _request.QueryString);
-                    else
-                        request.ContentLength = 0;
-                }
-                else
-                {
-                    WriteRequestParas(request, _request.QueryBytes);
-                }
-            }
-
             HttpResponse httpResponse = null;
             HttpWebResponse response = null;
 
+            var request = CreateRequest(_request, ref cookie);
             try
             {
+                if (_request.HttpMethod == Enum.HttpMethods.POST)
+                {
+                    if (_request.QueryBytes == null || _request.QueryBytes.Length == 0)
+                    {
+                        if (!string.IsNullOrWhiteSpace(_request.QueryString))
+                            WriteRequestParas(request, _request.QueryString);
+                        else
+                            request.ContentLength = 0;
+                    }
+                    else
+                    {
+                        WriteRequestParas(request, _request.QueryBytes);
+                    }
+                }
+
                 response = await request.GetResponseAsync() as HttpWebResponse;
             }
-            catch(WebException ex)
+            catch (WebException ex)
             {
                 response = ex.Response as HttpWebResponse;
             }
@@ -583,28 +581,27 @@ namespace SimpleWebRequestHelper.Helper
         internal static async Task<HttpResponse> DownloadFileAsync<T>(Entity.SimpleWebRequest<T> _request, CookieContainer cookie, string fileSaveFullPath)
             where T : Entity.SimpleWebResponse
         {
-            var request = CreateRequest(_request, ref cookie);
-
-            if (_request.HttpMethod == Enum.HttpMethods.POST)
-            {
-                if (_request.QueryBytes == null || _request.QueryBytes.Length == 0)
-                {
-                    if (!string.IsNullOrWhiteSpace(_request.QueryString))
-                        WriteRequestParas(request, _request.QueryString);
-                    else
-                        request.ContentLength = 0;
-                }
-                else
-                {
-                    WriteRequestParas(request, _request.QueryBytes);
-                }
-            }
-
             HttpResponse httpResponse = null;
             HttpWebResponse response = null;
 
+            var request = CreateRequest(_request, ref cookie);
+
             try
             {
+                if (_request.HttpMethod == Enum.HttpMethods.POST)
+                {
+                    if (_request.QueryBytes == null || _request.QueryBytes.Length == 0)
+                    {
+                        if (!string.IsNullOrWhiteSpace(_request.QueryString))
+                            WriteRequestParas(request, _request.QueryString);
+                        else
+                            request.ContentLength = 0;
+                    }
+                    else
+                    {
+                        WriteRequestParas(request, _request.QueryBytes);
+                    }
+                }
                 response = await request.GetResponseAsync() as HttpWebResponse;
             }
             catch (WebException ex)

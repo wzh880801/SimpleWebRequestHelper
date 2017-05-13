@@ -15,7 +15,7 @@ namespace SimpleWebRequestHelper
     public class DefaultWebClient : IWebClient
     {
         private CookieContainer _cookie = new CookieContainer();
-        private string _host = "wx2.qq.com";
+        private string _host = "api.productai.cn";
 
         public void Dispose()
         {
@@ -192,22 +192,6 @@ namespace SimpleWebRequestHelper
             var response = Helper.WebHelper.DownloadFile(request, _cookie, fileSaveFullPath);
             return this.Parse(request, response);
         }
-
-        //public virtual string ExecuteAsString<T>(Entity.SimpleWebRequest<T> request)
-        //    where T : Entity.SimpleWebResponse
-        //{
-        //    SetHost(request);
-
-        //    return Helper.WebHelper.GetResponse(request, _cookie).ResposeString;
-        //}
-
-        //public virtual async Task<string> ExecuteAsStringAsync<T>(Entity.SimpleWebRequest<T> request)
-        //    where T : Entity.SimpleWebResponse
-        //{
-        //    SetHost(request);
-
-        //    return (await Helper.WebHelper.GetResponseAsync(request, _cookie)).ResposeString;
-        //}
 
         /// <summary>
         /// Async submit the specified request

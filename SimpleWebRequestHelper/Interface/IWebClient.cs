@@ -16,14 +16,8 @@ namespace SimpleWebRequestHelper
         T Execute<T>(Entity.SimpleWebRequest<T> request)
             where T : Entity.SimpleWebResponse;
 
-        //string ExecuteAsString<T>(Entity.SimpleWebRequest<T> request)
-        //    where T : Entity.SimpleWebResponse;
-
         Task<T> ExecuteAsync<T>(Entity.SimpleWebRequest<T> request)
             where T : Entity.SimpleWebResponse;
-
-        //Task<string> ExecuteAsStringAsync<T>(Entity.SimpleWebRequest<T> request)
-        //    where T : Entity.SimpleWebResponse;
 
         T ExecuteDownload<T>(Entity.SimpleWebRequest<T> request, string fileSaveFullPath)
             where T : Entity.SimpleWebResponse;
