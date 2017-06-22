@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWebRequestHelper", "SimpleWebRequestHelper\SimpleWebRequestHelper.csproj", "{0D464433-3EC2-425A-BA77-A903EAAB13BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWebRequestHelper.NetCore", "SimpleWebRequestHelper.NetCore\SimpleWebRequestHelper.NetCore.csproj", "{16DF90B4-B34B-4E76-839C-6231DA693B93}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NET45", "NET45", "{0CCA9FF8-1553-40EE-9AA3-550641C46154}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NETCoe2.0", "NETCoe2.0", "{0CCC5B73-D575-4930-B371-73679424AA22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +21,16 @@ Global
 		{0D464433-3EC2-425A-BA77-A903EAAB13BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D464433-3EC2-425A-BA77-A903EAAB13BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D464433-3EC2-425A-BA77-A903EAAB13BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16DF90B4-B34B-4E76-839C-6231DA693B93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16DF90B4-B34B-4E76-839C-6231DA693B93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16DF90B4-B34B-4E76-839C-6231DA693B93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16DF90B4-B34B-4E76-839C-6231DA693B93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0D464433-3EC2-425A-BA77-A903EAAB13BE} = {0CCA9FF8-1553-40EE-9AA3-550641C46154}
+		{16DF90B4-B34B-4E76-839C-6231DA693B93} = {0CCC5B73-D575-4930-B371-73679424AA22}
 	EndGlobalSection
 EndGlobal
